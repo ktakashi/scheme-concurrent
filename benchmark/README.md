@@ -2,7 +2,8 @@ This directory contains benchmarks of fork-join, manual thread management
 and thread-pool. Each script executes configured numbers of tasks (`fib`).
 By default it's 100, 1000 and 10000. See `counts` file.
 
-One of the iteration result:
+One of the iteration result (environment: Ubuntu 14.04,
+Intel® Core™ i5-2520M CPU @ 2.50GHz × 4)
 
 Of Sagittarius:
 
