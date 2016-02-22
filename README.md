@@ -1,0 +1,47 @@
+Concurrent library for Scheme
+=============================
+
+This library is extracted Sagittarius Scheme for portability. The changes
+made on this library would be merged into Sagittarius itself and vice versa.
+
+Documentation
+-------------
+
+See [http://ktakashi.github.io/sagittarius-ref.html#concurrent](`(util concurrent)`)
+
+
+Requirements
+------------
+
+This library requires following SRFIs:
+
+- [http://srfi.schemers.org/srfi-18/](SRFI 18: Multithreading support)
+- [http://srfi.schemers.org/srfi-19/](SRFI 19: Time Data Types and Procedures)
+- [http://srfi.schemers.org/srfi-39/](SRFI 39: Parameter objects)
+- [http://srfi.schemers.org/srfi-117/](SRFI 117: Queues based on lists)
+
+
+And currently only implemented on R6RS.
+
+Tested implementations
+----------------------
+
+Unfortunately, not all R6RS implementations support SRFI-18. So only the
+following implementations are currently supported:
+
+- Sagittarius
+- Guile 2.0.11
+
+NOTE: on Guile, some of the tests may faile due to the bug of `thread-sleep!`
+
+TODO
+----
+
+- Supporting Racket.
+- Supporting R7RS implementations which supports SRFI-18.
+
+Copyright and lincense
+----------------------
+
+Copyright 2016 Takashi Kato. Code released under the BSD-style license.
+See [COPYING](COPYING).
