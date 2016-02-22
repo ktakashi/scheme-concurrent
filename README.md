@@ -7,7 +7,7 @@ made on this library would be merged into Sagittarius itself and vice versa.
 Documentation
 -------------
 
-See [http://ktakashi.github.io/sagittarius-ref.html#concurrent](`(util concurrent)`)
+See [`(util concurrent)`](http://ktakashi.github.io/sagittarius-ref.html#concurrent)
 
 
 Requirements
@@ -15,10 +15,10 @@ Requirements
 
 This library requires following SRFIs:
 
-- [http://srfi.schemers.org/srfi-18/](SRFI 18: Multithreading support)
-- [http://srfi.schemers.org/srfi-19/](SRFI 19: Time Data Types and Procedures)
-- [http://srfi.schemers.org/srfi-39/](SRFI 39: Parameter objects)
-- [http://srfi.schemers.org/srfi-117/](SRFI 117: Queues based on lists)
+- [SRFI 18: Multithreading support](http://srfi.schemers.org/srfi-18/)
+- [SRFI 19: Time Data Types and Procedures](http://srfi.schemers.org/srfi-19/)
+- [SRFI 39: Parameter objects](http://srfi.schemers.org/srfi-39/)
+- [SRFI 117: Queues based on lists](http://srfi.schemers.org/srfi-117/)
 
 
 And currently only implemented on R6RS.
