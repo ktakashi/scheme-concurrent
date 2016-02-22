@@ -73,7 +73,6 @@
     (import (rnrs)
 	    (only (srfi :1) remove!)
 	    (except (srfi :18) raise with-exception-handler)
-	    (srfi :19)
 	    (srfi :117)
 	    (util concurrent shared-queue)
 	    (util concurrent future)
