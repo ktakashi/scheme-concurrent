@@ -1,0 +1,95 @@
+;; -*- mode:scheme; coding: utf-8; -*-
+;; Automatically generated. DON'T EDIT!
+(define-library
+  (util concurrent)
+  (export
+    shared-queue?
+    make-shared-queue
+    <shared-queue>
+    shared-queue-empty?
+    shared-queue-size
+    shared-queue-max-length
+    shared-queue-overflows?
+    shared-queue-put!
+    shared-queue-get!
+    shared-queue-clear!
+    shared-queue-find
+    shared-queue-locked?
+    shared-priority-queue?
+    make-shared-priority-queue
+    <shared-priority-queue>
+    shared-priority-queue-empty?
+    shared-priority-queue-size
+    shared-priority-queue-put!
+    shared-priority-queue-get!
+    shared-priority-queue-remove!
+    shared-priority-queue-clear!
+    shared-priority-queue-locked?
+    make-thread-pool
+    thread-pool?
+    <thread-pool>
+    thread-pool-size
+    thread-pool-idling-count
+    thread-pool-idling?
+    thread-pool-push-task!
+    thread-pool-wait-all!
+    thread-pool-release!
+    thread-pool-thread-terminate!
+    thread-pool-thread
+    thread-pool-thread-id
+    thread-pool-thread-task-running?
+    thread-pool-current-thread-id
+    <future>
+    future?
+    future
+    class
+    future-get
+    future-cancel
+    future-done?
+    future-cancelled?
+    &future-terminated
+    future-terminated?
+    terminated-future
+    future-state
+    <simple-future>
+    make-simple-future
+    simple-future?
+    <executor>
+    executor?
+    executor-state
+    executor-available?
+    shutdown-executor!
+    execute-future!
+    <thread-pool-executor>
+    make-thread-pool-executor
+    thread-pool-executor?
+    thread-pool-executor-pool-size
+    thread-pool-executor-max-pool-size
+    thread-pool-executor-available?
+    thread-pool-executor-execute-future!
+    thread-pool-executor-shutdown!
+    abort-rejected-handler
+    terminate-oldest-handler
+    wait-finishing-handler
+    push-future-handler
+    &rejected-execution-error
+    rejected-execution-error?
+    rejected-future
+    rejected-executor
+    <fork-join-executor>
+    make-fork-join-executor
+    fork-join-executor?
+    fork-join-executor-available?
+    fork-join-executor-execute-future!
+    fork-join-executor-shutdown!
+    duplicate-executor-registration?
+    duplicate-executor-rtd
+    <executor-future>
+    make-executor-future
+    executor-future?
+    register-executor-methods)
+  (import
+    (util concurrent shared-queue)
+    (util concurrent thread-pool)
+    (util concurrent future)
+    (util concurrent executor)))

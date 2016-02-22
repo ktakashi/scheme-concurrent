@@ -15,13 +15,14 @@ Requirements
 
 This library requires following SRFIs:
 
+- [SRFI 1: List Library](http://srfi.schemers.org/srfi-1/)
 - [SRFI 18: Multithreading support](http://srfi.schemers.org/srfi-18/)
-- [SRFI 19: Time Data Types and Procedures](http://srfi.schemers.org/srfi-19/)
 - [SRFI 39: Parameter objects](http://srfi.schemers.org/srfi-39/)
 - [SRFI 117: Queues based on lists](http://srfi.schemers.org/srfi-117/)
 
+For R7RS, this is required:
 
-And currently only implemented on R6RS.
+- [SRFI 99: ERR5RS Records](http://srfi.schemers.org/srfi-99/)
 
 Tested implementations
 ----------------------
@@ -33,6 +34,11 @@ following implementations are currently supported:
 - Guile 2.0.11
 
 NOTE: on Guile, some of the tests may faile due to the bug of `thread-sleep!`
+
+The following R7RS implementations are also tested and works partially:
+
+- Chibi Scheme (0.7.3)
+- Gauche (0.9.5_pre1)
 
 Why should you use this?
 ------------------------
@@ -57,7 +63,7 @@ TODO
 ----
 
 - Supporting Racket.
-- Supporting R7RS implementations which supports SRFI-18.
+- ~~Supporting R7RS implementations which supports SRFI-18~~ (partially).
 
 Copyright and lincense
 ----------------------
