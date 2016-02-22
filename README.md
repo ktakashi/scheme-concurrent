@@ -34,6 +34,25 @@ following implementations are currently supported:
 
 NOTE: on Guile, some of the tests may faile due to the bug of `thread-sleep!`
 
+Why should you use this?
+------------------------
+
+### Shared queue
+Inter-thread communication sometimes required if you need write multi thread
+programming. This component makes it easier instead of using mutex and
+condition variables.
+
+### Thread pool
+Limiting number of threads might be required by your environment. This
+component re-use managed threads.
+
+### Future and executor 
+Future makes you to write asynchronouse program easier. Using simple future
+is equivalent with making a thread, starting the thread and joining the 
+thread. Combination of executor and future provides easier resource 
+management.
+
+
 TODO
 ----
 
