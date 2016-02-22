@@ -20,7 +20,7 @@
   (let ((tp (make-thread-pool 10)))
     (let loop ((n* n*))
       (if (null? n*)
-	  (thread-pool-wait-all! tp)
+	  (thread-pool-release! tp)
 	  (begin
 	    (thread-pool-push-task! tp (heavy-task (car n*)))
 	    (loop (cdr n*)))))))

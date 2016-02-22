@@ -46,29 +46,31 @@ Of Guile
 ```
 guile -q -L ../lib/guile -x .sls only-thread.scm
 clock utime stime cutime cstime gctime
- 0.27  0.84  0.02   0.00   0.00   0.10
+ 0.25  0.79  0.04   0.00   0.00   0.10
 clock utime stime cutime cstime gctime
- 2.38  7.72  0.18   0.00   0.00   0.14
+ 2.34  7.65  0.18   0.00   0.00   0.10
 clock utime stime cutime cstime gctime
- 25.88 77.36  3.28   0.00   0.00   0.36
+ 32.03 76.19 12.11   0.00   0.00   0.33
+
 guile -q -L ../lib/guile -x .sls managed-thread.scm
 clock utime stime cutime cstime gctime
- 0.28  0.74  0.01   0.00   0.00   0.09
+ 0.27  0.77  0.03   0.00   0.00   0.11
 clock utime stime cutime cstime gctime
- 2.58  6.59  0.11   0.00   0.00   0.31
+ 2.72  7.27  0.15   0.00   0.00   0.12
 clock utime stime cutime cstime gctime
- 25.13 66.25  0.96   0.00   0.00   0.46
+ 27.15 72.56  0.90   0.00   0.00   0.55
+
 guile -q -L ../src -L ../lib/guile -x .sls thread-pool.scm
 clock utime stime cutime cstime gctime
- 0.22  0.81  0.00   0.00   0.00   0.03
+ 0.20  0.73  0.00   0.00   0.00   0.01
 clock utime stime cutime cstime gctime
- 2.09  8.02  0.06   0.00   0.00   0.26
+ 2.02  7.35  0.00   0.00   0.00   0.07
 clock utime stime cutime cstime gctime
- 21.75 83.25  0.60   0.00   0.00   4.59
+ 19.96 74.06  0.14   0.00   0.00   0.92
 done
 ```
 
 Depending on the implementations but using thread pool on heavy load of 
-iteration makes better performance (max 20%). Manual thread management
+iteration makes better performance (max 60%). Manual thread management
 seems have least user time. According to the Guile result, thread-pool
 has the largest GC time.
