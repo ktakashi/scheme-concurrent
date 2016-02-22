@@ -6,6 +6,7 @@ One of the iteration result:
 
 Of Sagittarius:
 
+```
 sash -L ../src only-thread.scm
 
 ;;  (run count n*)
@@ -37,9 +38,11 @@ sash -L ../src  thread-pool.scm
 ;;  (run count n*)
 ;;  18.048768 real    67.398971 user    0.023797 sys
 done
+```
 
 Of Guile
 
+```
 guile -q -L ../lib/guile -x .sls only-thread.scm
 clock utime stime cutime cstime gctime
  0.27  0.84  0.02   0.00   0.00   0.10
@@ -62,6 +65,7 @@ clock utime stime cutime cstime gctime
 clock utime stime cutime cstime gctime
  21.75 83.25  0.60   0.00   0.00   4.59
 done
+```
 
 Depending on the implementations but using thread pool on heavy load of 
 iteration makes better performance (max 20%). Manual thread management
