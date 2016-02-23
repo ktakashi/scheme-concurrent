@@ -39,10 +39,12 @@
 	  *thread-pool-current-thread-id*
 	  make-executor
 
-	  (rename every for-all)
+	  for-all
+	  ;; this doesn't work on Gauche 0.9.4
+	  ;; (rename every for-all)
 	  )
   (import (except (scheme base) define-record-type)
-	  (srfi 1)
+	  (rename (srfi 1) (every for-all))
 	  (srfi 18)
 	  (util concurrent shared-queue))
   (cond-expand

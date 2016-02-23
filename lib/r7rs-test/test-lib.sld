@@ -1,3 +1,4 @@
+;; -*- mode:scheme; coding: utf-8; -*-
 (define-library (test-lib)
   (export test-begin
 	  test-end
@@ -59,6 +60,8 @@
 		    (test-error %test-error)
 		    (test-start test-begin)
 		    (test-section test-group)))
+    ;; workaround for Gauche 0.9.4
+    (export test test*)
     (begin
       (define-syntax test-equal
 	(syntax-rules ()

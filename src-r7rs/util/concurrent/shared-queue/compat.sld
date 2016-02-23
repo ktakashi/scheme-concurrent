@@ -49,10 +49,12 @@
 	  %spq-lock
 	  %spq-cv
 
-	  (rename quotient div)
+	  div
+	  ;; this doesn't work on Gauche 0.9.4
+	  ;; (rename quotient div)
 	  find
 	  )
-  (import (except (scheme base) define-record-type)
+  (import (except (rename (scheme base) (quotient div)) define-record-type)
 	  (srfi 1)
 	  (srfi 18))
   (cond-expand

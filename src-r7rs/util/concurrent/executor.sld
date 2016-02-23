@@ -47,6 +47,21 @@
     (util concurrent thread-pool)
     (util concurrent executor compat))
   (begin
+    (define mutex-lock-recursively! mutex-lock!)
+    (define mutex-unlock-recursively! mutex-unlock!)
+    (define-syntax
+      with-atomic
+      (syntax-rules
+        ()
+        ((_ executor expr ...)
+         (dynamic-wind
+           (lambda ()
+             (mutex-lock-recursively!
+               (executor-mutex executor)))
+           (lambda () expr ...)
+           (lambda ()
+             (mutex-unlock-recursively!
+               (executor-mutex executor)))))))
     (define (terminate-oldest-handler future executor)
       (define (get-oldest executor)
         (with-atomic
@@ -77,21 +92,6 @@
         (list-queue-list (executor-pool-ids executor))))
     (define (thread-pool-executor-max-pool-size executor)
       (thread-pool-size (executor-pool executor)))
-    (define mutex-lock-recursively! mutex-lock!)
-    (define mutex-unlock-recursively! mutex-unlock!)
-    (define-syntax
-      with-atomic
-      (syntax-rules
-        ()
-        ((_ executor expr ...)
-         (dynamic-wind
-           (lambda ()
-             (mutex-lock-recursively!
-               (executor-mutex executor)))
-           (lambda () expr ...)
-           (lambda ()
-             (mutex-unlock-recursively!
-               (executor-mutex executor)))))))
     (define (cleanup executor future state)
       (define (remove-from-queue! proc queue)
         (list-queue-set-list!

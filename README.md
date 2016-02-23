@@ -35,10 +35,10 @@ following implementations are currently supported:
 
 NOTE: on Guile, some of the tests may faile due to the bug of `thread-sleep!`
 
-The following R7RS implementations are also tested and works partially:
+The following R7RS implementations are also tested:
 
-- Chibi Scheme (0.7.3)
-- Gauche (0.9.5_pre1)
+- Chibi Scheme (0.7.3) : works partially
+- Gauche (0.9.4)
 
 Why should you use this?
 ------------------------

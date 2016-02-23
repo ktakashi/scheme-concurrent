@@ -92,8 +92,32 @@
     make-rejected-execution-error rejected-execution-error?
     (future rejected-future)
     (executor rejected-executor))
-  ;; TODO some other reject policy
 
+;;   (define (mutex-lock-recursively! mutex)
+;;     (if (eq? (mutex-state mutex) (current-thread))
+;; 	(let ((n (mutex-specific mutex)))
+;; 	  (mutex-specific-set! mutex (+ n 1)))
+;; 	(begin
+;; 	  (mutex-lock! mutex)
+;; 	  (mutex-specific-set! mutex 0))))
+;; 
+;;   (define (mutex-unlock-recursively! mutex)
+;;     (let ((n (mutex-specific mutex)))
+;;       (if (= n 0)
+;; 	  (mutex-unlock! mutex)
+;; 	  (mutex-specific-set! mutex (- n 1)))))
+  (define mutex-lock-recursively! mutex-lock!)
+  (define mutex-unlock-recursively! mutex-unlock!)
+  ;; this needs to be defined ahead for R7RS implementations
+  (define-syntax with-atomic
+    (syntax-rules ()
+      ((_ executor expr ...)
+       (dynamic-wind
+	   (lambda () (mutex-lock-recursively! (executor-mutex executor)))
+	   (lambda () expr ...)
+	   (lambda () (mutex-unlock-recursively! (executor-mutex executor)))))))
+
+  ;; TODO some other reject policy
   ;; aboring when pool is full
   (define (abort-rejected-handler future executor)
     (raise (condition (make-rejected-execution-error future executor)
@@ -165,29 +189,6 @@
   (define (thread-pool-executor-max-pool-size executor)
     (thread-pool-size (executor-pool executor)))
 
-;;   (define (mutex-lock-recursively! mutex)
-;;     (if (eq? (mutex-state mutex) (current-thread))
-;; 	(let ((n (mutex-specific mutex)))
-;; 	  (mutex-specific-set! mutex (+ n 1)))
-;; 	(begin
-;; 	  (mutex-lock! mutex)
-;; 	  (mutex-specific-set! mutex 0))))
-;; 
-;;   (define (mutex-unlock-recursively! mutex)
-;;     (let ((n (mutex-specific mutex)))
-;;       (if (= n 0)
-;; 	  (mutex-unlock! mutex)
-;; 	  (mutex-specific-set! mutex (- n 1)))))
-  (define mutex-lock-recursively! mutex-lock!)
-  (define mutex-unlock-recursively! mutex-unlock!)
-
-  (define-syntax with-atomic
-    (syntax-rules ()
-      ((_ executor expr ...)
-       (dynamic-wind
-	   (lambda () (mutex-lock-recursively! (executor-mutex executor)))
-	   (lambda () expr ...)
-	   (lambda () (mutex-unlock-recursively! (executor-mutex executor)))))))
   (define (cleanup executor future state)
     (define (remove-from-queue! proc queue)
       (list-queue-set-list! queue (remove! proc (list-queue-list queue))))
