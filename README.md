@@ -1,8 +1,9 @@
 Concurrent library for Scheme
 =============================
 
-This library is extracted Sagittarius Scheme for portability. The changes
-made on this library would be merged into Sagittarius itself and vice versa.
+This library is extracted from Sagittarius Scheme for portability. The
+changes made on this library would be merged into Sagittarius itself
+and vice versa.
 
 Documentation
 -------------
@@ -43,16 +44,27 @@ The following R7RS implementations are also tested:
 Why should you use this?
 ------------------------
 
-### Shared queue
+Using raw thread, mutex and condition variables often causes dead lock or
+other problems. This library provides 4 components which reduce manual
+operation of them and possibly decrease the possiblity of multi threading
+related issues.
+
+### Shared queue 
+`(util concurrent shared-queue)`
+
 Inter-thread communication sometimes required if you need write multi thread
 programming. This component makes it easier instead of using mutex and
 condition variables.
 
-### Thread pool
+### Thread pool 
+`(util concurrent thread-pool)`
+
 Limiting number of threads might be required by your environment. This
 component re-use managed threads.
 
-### Future and executor 
+### Future and executor
+`(util concurrent future)` and  `(util concurrent executor)`
+
 Future makes you to write asynchronouse program easier. Using simple future
 is equivalent with making a thread, starting the thread and joining the 
 thread. Combination of executor and future provides easier resource 
@@ -63,7 +75,7 @@ TODO
 ----
 
 - Supporting Racket.
-- ~~Supporting R7RS implementations which supports SRFI-18~~ (partially).
+- ~~Supporting R7RS implementations which supports SRFI-18~~.
 
 Copyright and lincense
 ----------------------
