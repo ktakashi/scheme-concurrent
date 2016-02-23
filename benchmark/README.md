@@ -41,7 +41,7 @@ sash -L ../src  thread-pool.scm
 done
 ```
 
-Of Guile
+Of Guile:
 
 ```
 guile -q -L ../lib/guile -x .sls only-thread.scm
@@ -69,6 +69,70 @@ clock utime stime cutime cstime gctime
  19.96 74.06  0.14   0.00   0.00   0.92
 done
 ```
+
+Of Gauche:
+
+```
+only-thread.scm7
+;(time (run count n*))
+; real   0.191
+; user   0.670
+; sys    0.010
+;(time (run count n*))
+; real   1.914
+; user   6.840
+; sys    0.060
+;(time (run count n*))
+; real  18.636
+; user  68.540
+; sys    0.580
+managed-thread.scm7
+;(time (run count n*))
+; real   0.228
+; user   0.650
+; sys    0.000
+;(time (run count n*))
+; real   2.291
+; user   6.220
+; sys    0.050
+;(time (run count n*))
+; real  22.466
+; user  61.200
+; sys    0.530
+thread-pool.scm7
+;(time (run count n*))
+; real   0.187
+; user   0.650
+; sys    0.010
+;(time (run count n*))
+; real   1.804
+; user   6.770
+; sys    0.000
+;(time (run count n*))
+; real  17.881
+; user  67.240
+; sys    0.040
+done
+```
+
+Of Chibi:
+
+```
+only-thread.scm7
+(run count n*): 440 ms
+(run count n*): 4674 ms
+(run count n*): 53061 ms
+managed-thread.scm7
+(run count n*): 488 ms
+(run count n*): 5069 ms
+(run count n*): 54634 ms
+thread-pool.scm7
+(run count n*): 574 ms
+(run count n*): 5028 ms
+(run count n*): 49338 ms
+done
+```
+
 
 Depending on the implementations but using thread pool on heavy load of 
 iteration makes better performance (max 60%). Manual thread management
