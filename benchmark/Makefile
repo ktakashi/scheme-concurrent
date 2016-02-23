@@ -26,7 +26,7 @@ gauche: $(R7RS_FILES)
 chibi:  $(R7RS_FILES)
 	@for f in $(R7RS_FILES); do \
 	  echo $$f; \
-	  chibi-scheme -I../src-r7rs -I../lib/r7rs -I../lib/chibi $$f; \
+	  chibi-scheme -I../src-r7rs -I../lib/r7rs -I../lib/chibi-scheme $$f; \
 	done
 	@echo done
 
