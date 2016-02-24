@@ -17,13 +17,15 @@
        counts))
 
 (define (run count n*)
-  (let ((tp (make-thread-pool 10))
-	(sq (make-shared-queue)))
-    (let loop ((n* n*))
-      (if (null? n*)
-	  (thread-pool-release! tp)
-	  (let ((p (heavy-task (car n*))))
-	    (thread-pool-push-task! tp (lambda () (shared-queue-put! sq (p))))
-	    (loop (cdr n*)))))))
+  (let ((e (make-thread-pool-executor 10)))
+    (let loop ((n* n*) (f* '()))
+      (cond ((null? n*) (for-each future-get f*) (shutdown-executor! e))
+	    ((executor-available? e)
+	     (let ((f (make-executor-future (heavy-task (car n*)))))
+	       (execute-future! e f)
+	       (loop (cdr n*) (cons f f*))))
+	    (else 
+	     (for-each future-get f*)
+	     (loop n* '()))))))
 
 (for-each (lambda (count n*) (time (run count n*))) counts n**)

@@ -1,11 +1,12 @@
-FILES= only-thread.scm managed-thread.scm thread-pool.scm
+# executor doesn't work on chibi properly...
+FILES= only-thread.scm managed-thread.scm thread-pool.scm # executor.scm
 R7RS_FILES= $(FILES:.scm=.scm7)
 
 
 all: sagittarius guile gauche chibi
 
 sagittarius:
-	@for f in $(FILES); do edho $$f; sash -L ../src $$f; done
+	@for f in $(FILES); do echo $$f; sash -L ../src $$f; done
 	@echo done
 
 guile:
