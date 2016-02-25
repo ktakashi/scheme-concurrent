@@ -8,65 +8,83 @@ Intel® Core™ i5-2520M CPU @ 2.50GHz × 4)
 Of Sagittarius:
 
 ```
-sash -L ../src only-thread.scm
+only-thread.scm
 
 ;;  (run count n*)
-;;  0.187311 real    0.666758 user    0.016081 sys
+;;  0.179345 real    0.669790 user    0.000000 sys
 
 ;;  (run count n*)
-;;  1.930832 real    6.880919 user    0.057010 sys
+;;  1.814083 real    6.944284 user    0.036162 sys
 
 ;;  (run count n*)
-;;  19.668944 real    71.378263 user    0.535720 sys
-sash -L ../src  managed-thread.scm
+;;  19.771697 real    72.585444 user    0.534883 sys
+managed-thread.scm
 
 ;;  (run count n*)
-;;  0.205822 real    0.634320 user    0.004150 sys
+;;  0.217348 real    0.626586 user    0.004360 sys
 
 ;;  (run count n*)
-;;  2.224107 real    6.178853 user    0.084120 sys
+;;  2.313352 real    6.100025 user    0.062993 sys
 
 ;;  (run count n*)
-;;  22.646924 real    62.801109 user    0.451154 sys
-sash -L ../src  thread-pool.scm
+;;  25.991337 real    61.319317 user    0.494629 sys
+thread-pool.scm
 
 ;;  (run count n*)
-;;  0.321009 real    0.682420 user    8.4e-400 sys
+;;  0.296410 real    0.690976 user    0.000000 sys
 
 ;;  (run count n*)
-;;  1.918472 real    6.752759 user    7.52e-40 sys
+;;  1.908583 real    6.595167 user    0.015673 sys
 
 ;;  (run count n*)
-;;  18.048768 real    67.398971 user    0.023797 sys
+;;  18.062681 real    67.95119 user    0.035911 sys
+executor.scm
+
+;;  (run count n*)
+;;  0.321831 real    0.651005 user    0.004029 sys
+
+;;  (run count n*)
+;;  2.188450 real    6.584105 user    0.003298 sys
+
+;;  (run count n*)
+;;  21.440668 real    65.512636 user    0.123994 sys
 done
 ```
 
 Of Guile:
 
 ```
-guile -q -L ../lib/guile -x .sls only-thread.scm
+only-thread.scm
 clock utime stime cutime cstime gctime
- 0.25  0.79  0.04   0.00   0.00   0.10
+ 0.29  0.90  0.02   0.00   0.00   0.13
 clock utime stime cutime cstime gctime
- 2.34  7.65  0.18   0.00   0.00   0.10
+ 3.22  8.77  0.09   0.00   0.00   0.13
 clock utime stime cutime cstime gctime
- 32.03 76.19 12.11   0.00   0.00   0.33
-
-guile -q -L ../lib/guile -x .sls managed-thread.scm
+ 28.38 87.95  3.10   0.00   0.00   0.31
+ 
+managed-thread.scm
 clock utime stime cutime cstime gctime
- 0.27  0.77  0.03   0.00   0.00   0.11
+ 0.27  0.69  0.02   0.00   0.00   0.10
 clock utime stime cutime cstime gctime
- 2.72  7.27  0.15   0.00   0.00   0.12
+ 2.70  6.56  0.13   0.00   0.00   0.29
 clock utime stime cutime cstime gctime
- 27.15 72.56  0.90   0.00   0.00   0.55
-
-guile -q -L ../src -L ../lib/guile -x .sls thread-pool.scm
+ 24.82 66.39  1.02   0.00   0.00   0.42
+ 
+thread-pool.scm
 clock utime stime cutime cstime gctime
- 0.20  0.73  0.00   0.00   0.00   0.01
+ 0.24  0.84  0.00   0.00   0.00   0.04
 clock utime stime cutime cstime gctime
- 2.02  7.35  0.00   0.00   0.00   0.07
+ 2.56  8.11  0.01   0.00   0.00   0.04
 clock utime stime cutime cstime gctime
- 19.96 74.06  0.14   0.00   0.00   0.92
+ 21.33 81.66  0.11   0.00   0.00   1.10
+ 
+executor.scm
+clock utime stime cutime cstime gctime
+ 0.30  0.75  0.01   0.00   0.00   0.04
+clock utime stime cutime cstime gctime
+ 2.73  7.43  0.04   0.00   0.00   0.22
+clock utime stime cutime cstime gctime
+ 26.53 74.37  0.35   0.00   0.00   2.64
 done
 ```
 
@@ -75,43 +93,59 @@ Of Gauche:
 ```
 only-thread.scm7
 ;(time (run count n*))
-; real   0.191
-; user   0.670
-; sys    0.010
+; real   0.190
+; user   0.690
+; sys    0.000
 ;(time (run count n*))
-; real   1.914
-; user   6.840
-; sys    0.060
+; real   1.780
+; user   6.820
+; sys    0.030
 ;(time (run count n*))
-; real  18.636
-; user  68.540
-; sys    0.580
+; real  18.129
+; user  67.780
+; sys    0.470
+
 managed-thread.scm7
 ;(time (run count n*))
-; real   0.228
-; user   0.650
+; real   0.231
+; user   0.610
 ; sys    0.000
 ;(time (run count n*))
-; real   2.291
-; user   6.220
+; real   2.286
+; user   6.170
 ; sys    0.050
 ;(time (run count n*))
-; real  22.466
-; user  61.200
-; sys    0.530
+; real  22.487
+; user  62.030
+; sys    0.460
+
 thread-pool.scm7
 ;(time (run count n*))
-; real   0.187
-; user   0.650
-; sys    0.010
-;(time (run count n*))
-; real   1.804
-; user   6.770
+; real   0.192
+; user   0.680
 ; sys    0.000
 ;(time (run count n*))
-; real  17.881
-; user  67.240
-; sys    0.040
+; real   1.794
+; user   6.920
+; sys    0.000
+;(time (run count n*))
+; real  17.867
+; user  69.960
+; sys    0.010
+
+executor.scm7
+;(time (run count n*))
+; real   0.219
+; user   0.660
+; sys    0.000
+;(time (run count n*))
+; real   2.217
+; user   6.580
+; sys    0.010
+;(time (run count n*))
+; real  21.584
+; user  65.600
+; sys    0.120
 done
 ```
 
@@ -119,18 +153,23 @@ Of Chibi:
 
 ```
 only-thread.scm7
-(run count n*): 440 ms
-(run count n*): 4674 ms
-(run count n*): 53061 ms
+(run count n*): 545 ms
+(run count n*): 5820 ms
+(run count n*): 64945 ms
+
 managed-thread.scm7
-(run count n*): 488 ms
-(run count n*): 5069 ms
-(run count n*): 54634 ms
+(run count n*): 438 ms
+(run count n*): 4487 ms
+(run count n*): 44951 ms
+
 thread-pool.scm7
-(run count n*): 574 ms
-(run count n*): 5028 ms
-(run count n*): 49338 ms
-done
+(run count n*): 610 ms
+(run count n*): 5307 ms
+(run count n*): 53893 ms
+
+executor.scm7
+(run count n*): 572 ms
+;... didn't stop. not sure which side of bug
 ```
 
 
