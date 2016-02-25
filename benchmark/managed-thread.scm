@@ -17,12 +17,14 @@
        counts))
 
 (define (run count n*)
-  (let loop ((i 0) (n* n*) (n 0) (t* '()))
-    (cond ((= i count) (for-each thread-join! t*))
-	  ((= n 10) (for-each thread-join! t*) (loop (+ i 1) (cdr n*) 0 '()))
+  (let loop ((i 0) (n* n*) (n 0) (t* '()) (r '()))
+    (cond ((= i count) (apply append (cons (map thread-join! t*) r)))
+	  ((= n 10) 
+	   (loop (+ i 1) (cdr n*) 0 '() (cons (map thread-join! t*) r)))
 	  (else (loop (+ i 1) (cdr n*) (+ n 1) 
 		      (cons (thread-start! (make-thread (heavy-task (car n*))))
-			    t*))))))
+			    t*)
+		      r)))))
 
 (for-each (lambda (count n*) (time (run count n*))) counts n**)
 
