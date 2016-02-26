@@ -60,7 +60,7 @@ clock utime stime cutime cstime gctime
 clock utime stime cutime cstime gctime
  3.22  8.77  0.09   0.00   0.00   0.13
 clock utime stime cutime cstime gctime
- 28.38 87.95  3.10   0.00   0.00   0.31
+28.38 87.95  3.10   0.00   0.00   0.31
  
 managed-thread.scm
 clock utime stime cutime cstime gctime
@@ -68,7 +68,7 @@ clock utime stime cutime cstime gctime
 clock utime stime cutime cstime gctime
  2.70  6.56  0.13   0.00   0.00   0.29
 clock utime stime cutime cstime gctime
- 24.82 66.39  1.02   0.00   0.00   0.42
+24.82 66.39  1.02   0.00   0.00   0.42
  
 thread-pool.scm
 clock utime stime cutime cstime gctime
@@ -76,15 +76,15 @@ clock utime stime cutime cstime gctime
 clock utime stime cutime cstime gctime
  2.56  8.11  0.01   0.00   0.00   0.04
 clock utime stime cutime cstime gctime
- 21.33 81.66  0.11   0.00   0.00   1.10
- 
+21.33 81.66  0.11   0.00   0.00   1.10
+
 executor.scm
 clock utime stime cutime cstime gctime
- 0.30  0.75  0.01   0.00   0.00   0.04
+ 0.25  0.75  0.01   0.00   0.00   0.04
 clock utime stime cutime cstime gctime
- 2.73  7.43  0.04   0.00   0.00   0.22
+ 2.44  7.38  0.02   0.00   0.00   0.23
 clock utime stime cutime cstime gctime
- 26.53 74.37  0.35   0.00   0.00   2.64
+24.58 74.28  0.53   0.00   0.00   3.11
 done
 ```
 
