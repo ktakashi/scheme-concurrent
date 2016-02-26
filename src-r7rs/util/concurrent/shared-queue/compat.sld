@@ -42,12 +42,16 @@
 
 	  <shared-priority-queue> make-shared-priority-queue 
 	  shared-priority-queue?
-	  %spq-es %spq-es-set!
-	  shared-priority-queue-size %spq-size-set!
+	  shared-priority-queue-max-length
+	  shared-priority-queue-size
 	  shared-priority-queue-compare
+	  ;; only internal
+	  %spq-es %spq-es-set!
+	  %spq-size-set!
 	  %spq-w %spq-w-set!
 	  %spq-lock
 	  %spq-cv
+	  %spq-wcv
 
 	  div
 	  ;; this doesn't work on Gauche 0.9.4
@@ -88,24 +92,22 @@
       shared-priority-queue?
       (elements %spq-es %spq-es-set!)
       (size shared-priority-queue-size %spq-size-set!)
+      (max-length shared-priority-queue-max-length)
       (compare shared-priority-queue-compare)
       (w %spq-w %spq-w-set!)
       (lock %spq-lock)
-      (cv %spq-cv))
+      (cv %spq-cv)
+      (write-cv %spq-wcv))
 
     (define make-shared-priority-queue
-      (lambda (compare . maybe-capacity)
-	(let ((capacity (if (pair? maybe-capacity)
-			    (car maybe-capacity)
-			    10)))
-	  (unless (integer? capacity)
-	    (error "make-shared-priority-queue: capacity must be an integer"
-		   capacity))
-	  (%make-shared-priority-queue (make-vector capacity)
-				       0
-				       compare
-				       0
-				       (make-mutex)
-				       (make-condition-variable)))))
+      (lambda (compare . maybe-max)
+	 (let* ((max-length (if (pair? maybe-max) (car maybe-max) -1))
+		(capacity (if (>= max-length 0) max-length 10)))
+	   (unless (integer? capacity)
+	     (error "make-shared-priority-queue:capacity must be an integer"
+		    capacity))
+	   (%make-shared-priority-queue
+	    (make-vector capacity) 0 max-length compare 0 (make-mutex) 
+	    (make-condition-variable) (make-condition-variable)))))
     )
   )

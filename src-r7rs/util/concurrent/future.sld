@@ -23,11 +23,14 @@
     future-canceller-set!
     <simple-future>
     make-simple-future
-    simple-future?)
+    simple-future?
+    make-shared-box
+    shared-box?
+    shared-box-put!
+    shared-box-get!)
   (import
     (except (scheme base) define-record-type)
     (except (srfi 18) raise with-exception-handler)
-    (util concurrent shared-queue)
     (util concurrent future compat))
   (begin
     (define-syntax class (syntax-rules ()))
@@ -56,8 +59,8 @@
       (let ((state (future-state future)))
         (let ((r (future-result future)))
           (finish
-            (cond ((and (not (eq? state 'done)) (shared-queue? r))
-                   (future-result-set! future (shared-queue-get! r))
+            (cond ((and (not (eq? state 'done)) (shared-box? r))
+                   (future-result-set! future (shared-box-get! r))
                    (future-result future))
                   ((and (not (eq? state 'done)) (procedure? r))
                    (future-result-set! future (r future))

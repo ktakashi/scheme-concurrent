@@ -52,6 +52,9 @@
 		     (('define ('not-started . args) . rest) #t)
 		     (('define ('abort-rejected-handler . args) . rest) #t)
 		     (('define 'default-rejected-handler . rest) #t)
+		     (('define 'shared-box-mark . rest) #t)
+		     (('define ('shared-box-put! . args) . rest) #t)
+		     (('define ('shared-box-get! . args) . rest) #t)
 		     (_ #f)))) body))
 
 ;; this file must be manually modified...

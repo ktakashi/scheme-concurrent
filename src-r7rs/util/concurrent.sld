@@ -20,6 +20,8 @@
     <shared-priority-queue>
     shared-priority-queue-empty?
     shared-priority-queue-size
+    shared-priority-queue-max-length
+    shared-priority-queue-overflows?
     shared-priority-queue-put!
     shared-priority-queue-get!
     shared-priority-queue-remove!

@@ -42,14 +42,49 @@
 	  condition make-message-condition make-who-condition
 	  make-irritants-condition
 	  record-constructor record-constructor-descriptor
+
+	  make-shared-box shared-box? shared-box-mark
+	  shared-box-get! shared-box-put!
+	  %sb-value %sb-value-set!
+	  %sb-lock %sb-cv
 	  )
   (import (except (scheme base) define-record-type)
-	  (srfi 18)
-	  (util concurrent shared-queue))
+	  (srfi 18))
   (cond-expand
    ((library (srfi 99)) (import (srfi 99)))
    (else (error '(util concurrent) "SRFI-99 is required")))
   (begin
+    (define shared-box-mark (list 'shared-box))
+    (define-record-type <shared-box> %make-shared-box 
+      shared-box?
+      (value %sb-value %sb-value-set!)
+      (lock %sb-lock)
+      (cv   %sb-cv))
+    (define make-shared-box
+      (lambda ()
+	(%make-shared-box shared-box-mark (make-mutex) 
+			  (make-condition-variable))))
+    ;; On Sagittarius, shared-box-mark would be inlined if 
+    ;; it's not in the same library.
+    (define (shared-box-put! sb o)
+      (mutex-lock! (%sb-lock sb))
+      (%sb-value-set! sb o)
+      ;; TODO do we need count waiter?
+      (condition-variable-broadcast! (%sb-cv sb))
+      (mutex-unlock! (%sb-lock sb)))
+    (define (shared-box-get! sb)
+      (mutex-lock! (%sb-lock sb))
+      (let loop ()
+	(let ((r (%sb-value sb)))
+	  (cond ((eq? r shared-box-mark)
+		 (cond ((mutex-unlock! (%sb-lock sb) (%sb-cv sb))
+			(mutex-lock! (%sb-lock sb))
+			(loop))
+		       (else #f)))
+		(else 
+		 (mutex-unlock! (%sb-lock sb))
+		 r)))))
+
     (define-record-type <future> 
       %make-future 
       future?
@@ -65,12 +100,12 @@
       (lambda ()
 	(guard (e (else (future-canceller-set! f #t)
 			(future-state-set! f 'finished)
-			(shared-queue-put! q e)))
+			(shared-box-put! q e)))
 	  (let ((r (thunk)))
 	    (future-state-set! f 'finished)
-	    (shared-queue-put! q r)))))
+	    (shared-box-put! q r)))))
     (define (make-simple-future thunk)
-      (let ((q (make-shared-queue)))
+      (let ((q (make-shared-box)))
 	(let ((f (%make-simple-future thunk q 'created #f)))
 	  (thread-start! (make-thread (simple-invoke thunk f q)))
 	  f)))

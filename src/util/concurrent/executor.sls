@@ -74,7 +74,6 @@
 	    (only (srfi :1) remove!)
 	    (except (srfi :18) raise with-exception-handler)
 	    (srfi :117)
-	    (util concurrent shared-queue)
 	    (util concurrent future)
 	    (util concurrent thread-pool))
 
@@ -246,14 +245,14 @@
 	  (guard (e (else
 		     (future-canceller-set! future #t) ;; kinda abusing
 		     (cleanup executor future 'finished)
-		     (shared-queue-put! q e)))
+		     (shared-box-put! q e)))
 	    (let ((r (thunk)))
 	      ;; first remove future then put the result
 	      ;; otherwise future-get may be called before.
 	      (cleanup executor future 'finished)
-	      (shared-queue-put! q r))))))
+	      (shared-box-put! q r))))))
     (define (add-future future executor)
-      (future-result-set! future (make-shared-queue))    
+      (future-result-set! future (make-shared-box))    
       (let* ((thunk (future-thunk future))
 	     (id (thread-pool-push-task! (executor-pool executor)
 					 (task-invoker thunk))))
@@ -294,10 +293,10 @@
 	(let ((q (future-result f)))
 	  (guard (e (else (future-canceller-set! f #t)
 			  (future-state-set! f 'finished)
-			  (shared-queue-put! q e)))
+			  (shared-box-put! q e)))
 	    (let ((r (thunk)))
 	      (future-state-set! f 'finished)
-	      (shared-queue-put! q r))))))
+	      (shared-box-put! q r))))))
     (unless (fork-join-executor? e)
       (assertion-violation 'fork-join-executor-available? 
 			   "not a fork-join-executor" e))
