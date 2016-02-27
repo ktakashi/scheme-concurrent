@@ -1,0 +1,121 @@
+Benchmark result on Cygwin (on Windows 7 Home Premium, 8GB RAM,
+Intel(R) Core(TM) i5-3317U @ 1.70GHz 1.70GHz)
+
+only-thread.scm
+
+;;  (run count n*)
+;;  0.268015 real    0.920000 user    0.140000 sys
+
+;;  (run count n*)
+;;  2.739157 real    9.173000 user    1.248000 sys
+out of memory (4096). aborting...
+managed-thread.scm
+
+;;  (run count n*)
+;;  0.257014 real    0.671000 user    0.093000 sys
+
+;;  (run count n*)
+;;  2.734157 real    7.941000 user    0.983000 sys
+
+;;  (run count n*)
+;;  27.492572 real    79.15400 user    7.504000 sys
+thread-pool.scm
+
+;;  (run count n*)
+;;  0.332019 real    0.874000 user    0.000000 sys
+
+;;  (run count n*)
+;;  2.310132 real    8.065000 user    0.015000 sys
+
+;;  (run count n*)
+;;  21.346221 real    81.44800 user    0.047000 sys
+done
+only-thread.scm
+GC Warning: Out of Memory! Heap size: 382 MiB. Returning NULL!
+*** starting debugger for pid 12768, tid 15624
+GC Warning: Out of Memory! Heap size: 382 MiB. Returning NULL!
+*** starting debugger for pid 12768, tid 17776
+      1 [unknown (0x3D08)] guile 18420 try_to_debug: Failed to start debugger, Win32 error 2
+*** continuing pid 12768 from debugger call (0)
+   1143 [unknown (0x4570)] guile 18420 try_to_debug: Failed to start debugger, Win32 error 2
+*** starting debugger for pid 12768, tid 15624
+*** continuing pid 12768 from debugger call (0)
+   5235 [unknown (0x3D08)] guile 18420 try_to_debug: Failed to start debugger, Win32 error 2
+*** continuing pid 12768 from debugger call (0)
+/bin/sh: line 1: 18420 Segmentation fault      (core dumped) guile -q -L ../src -L ../lib/guile -x .sls $f
+managed-thread.scm
+GC Warning: Out of Memory! Heap size: 382 MiB. Returning NULL!
+*** starting debugger for pid 16368, tid 17440
+GC Warning: Out of Memory! Heap size: 382 MiB. Returning NULL!
+*** starting debugger for pid 16368, tid 13164
+      1 [unknown (0x4420)] guile 17464 try_to_debug: Failed to start debugger, Win32 error 2
+*** continuing pid 16368 from debugger call (0)
+    906 [unknown (0x336C)] guile 17464 try_to_debug: Failed to start debugger, Win32 error 2
+*** starting debugger for pid 16368, tid 17440
+*** continuing pid 16368 from debugger call (0)
+   4510 [unknown (0x4420)] guile 17464 try_to_debug: Failed to start debugger, Win32 error 2
+*** continuing pid 16368 from debugger call (0)
+/bin/sh: line 1: 17464 Segmentation fault      (core dumped) guile -q -L ../src -L ../lib/guile -x .sls $f
+thread-pool.scm
+clock utime stime cutime cstime gctime
+ 0.34  1.23  0.02   0.00   0.00   0.03
+clock utime stime cutime cstime gctime
+ 3.12 11.87  0.02   0.00   0.00   0.08
+clock utime stime cutime cstime gctime
+31.24 118.09  0.34   0.00   0.00   0.86
+done
+sash convert-r7rs.scm managed-thread.scm managed-thread.scm7
+sash convert-r7rs.scm thread-pool.scm thread-pool.scm7
+only-thread.scm7
+;(time (run count n*))
+; real   0.269
+; user   0.842
+; sys    0.124
+;(time (run count n*))
+; real   2.735
+; user   9.079
+; sys    1.061
+GC Warning: Failed to expand heap by 16777216 bytes
+GC Warning: Failed to expand heap by 262144 bytes
+GC Warning: Out of Memory! Heap size: 378 MiB. Returning NULL!
+out of memory (40000).  aborting...
+managed-thread.scm7
+;(time (run count n*))
+; real   0.298
+; user   0.717
+; sys    0.109
+;(time (run count n*))
+; real   2.665
+; user   7.706
+; sys    0.858
+;(time (run count n*))
+; real  26.692
+; user  78.126
+; sys    7.410
+thread-pool.scm7
+;(time (run count n*))
+; real   0.299
+; user   0.718
+; sys    0.000
+;(time (run count n*))
+; real   2.116
+; user   7.769
+; sys    0.016
+;(time (run count n*))
+; real  20.269
+; user  78.187
+; sys    0.016
+done
+only-thread.scm7
+(run count n*): 695 ms
+(run count n*): 7083 ms
+(run count n*): 73904 ms
+managed-thread.scm7
+(run count n*): 618 ms
+(run count n*): 6134 ms
+(run count n*): 61386 ms
+thread-pool.scm7
+(run count n*): 658 ms
+(run count n*): 6178 ms
+(run count n*): 60489 ms
+done
