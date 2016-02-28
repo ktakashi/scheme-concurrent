@@ -47,6 +47,7 @@
 	  shared-box-get! shared-box-put!
 	  %sb-value %sb-value-set!
 	  %sb-lock %sb-cv
+	  raise-future-terminated
 	  )
   (import (except (scheme base) define-record-type)
 	  (srfi 18))
@@ -72,15 +73,20 @@
       ;; TODO do we need count waiter?
       (condition-variable-broadcast! (%sb-cv sb))
       (mutex-unlock! (%sb-lock sb)))
-    (define (shared-box-get! sb)
+    (define (shared-box-get! sb . maybe-timeout)
+      (define timeout (if (pair? maybe-timeout) (car maybe-timeout) #f))
+      (define timeout-value (if (and (pair? maybe-timeout)
+				     (pair? (cdr maybe-timeout)))
+				(cadr maybe-timeout)
+				#f))
       (mutex-lock! (%sb-lock sb))
       (let loop ()
 	(let ((r (%sb-value sb)))
 	  (cond ((eq? r shared-box-mark)
-		 (cond ((mutex-unlock! (%sb-lock sb) (%sb-cv sb))
+		 (cond ((mutex-unlock! (%sb-lock sb) (%sb-cv sb) timeout)
 			(mutex-lock! (%sb-lock sb))
 			(loop))
-		       (else #f)))
+		       (else timeout-value)))
 		(else 
 		 (mutex-unlock! (%sb-lock sb))
 		 r)))))
@@ -109,6 +115,9 @@
 	(let ((f (%make-simple-future thunk q 'created #f)))
 	  (thread-start! (make-thread (simple-invoke thunk f q)))
 	  f)))
+    (define (raise-future-terminated future)
+      (error "future-get: future is terminated" future))
+
     (define record-constructor-descriptor values)
     ;; this isn't a good one...
     (define (not-started dummy)
