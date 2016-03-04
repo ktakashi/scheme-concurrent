@@ -80,6 +80,7 @@
 	    executor-available?
 	    shutdown-executor!
 	    execute-future!
+	    executor-submit!
 
 	    <thread-pool-executor> make-thread-pool-executor 
 	    thread-pool-executor?

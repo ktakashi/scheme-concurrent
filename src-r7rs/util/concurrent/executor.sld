@@ -9,6 +9,7 @@
     executor-available?
     shutdown-executor!
     execute-future!
+    executor-submit!
     <thread-pool-executor>
     make-thread-pool-executor
     thread-pool-executor?
@@ -196,6 +197,9 @@
           'fork-join-executor-available?
           "not a fork-join-executor"
           e))
+      (unless
+        (shared-box? (future-result f))
+        (future-result-set! f (make-shared-box)))
       (thread-start!
         (make-thread (task-invoker (future-thunk f))))
       f)
@@ -270,6 +274,10 @@
         cadddr
         (not-supported e)
         e))
+    (define (executor-submit! e thunk)
+      (let ((f (make-executor-future thunk)))
+        (execute-future! e f)
+        f))
     (register-executor-methods
       <thread-pool-executor>
       thread-pool-executor-available?
