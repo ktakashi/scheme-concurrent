@@ -64,15 +64,17 @@
 
     (define (make-executor idlings i queue error-handler)
       (lambda ()
+	(define (call-error-handler e) (guard (ex (else #t)) (error-handler e)))
 	(*thread-pool-current-thread-id* i)
 	(let loop ()
 	  (shared-queue-put! idlings i)
 	  (let loop2 ((task (shared-queue-get! queue)))
 	    (when task
-	      (guard (e (else (error-handler e))) (task))
+	      (guard (e (else (call-error-handler e))) (task))
 	      (if (shared-queue-empty? queue)
-                  (loop)
-                  (loop2 (shared-queue-get! queue))))))))
+		  (loop)
+		  (loop2 (shared-queue-get! queue))))))))
+
     (define make-thread-pool
       (lambda (n . maybe-error-handler)
 	(let* ((threads (make-vector n))

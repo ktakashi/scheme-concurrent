@@ -89,16 +89,32 @@
       (wait-queue tp)
       (wait-threads tp))
     (define (thread-pool-release! tp . opt)
+      (define-syntax
+        dovector
+        (syntax-rules
+          (->)
+          ((_ vec -> v (i e) expr ...)
+           (let ((v vec))
+             (do ((c (vector-length v)) (i 0 (+ i 1)))
+                 ((= i c))
+               (let ((e (vector-ref v i))) expr ...))))))
       (let ((type (if (null? opt) 'join (car opt))))
-        (vector-for-each
-          (lambda (q) (shared-queue-put! q #f))
-          (<thread-pool>-queues tp))
-        (vector-for-each
-          (lambda (t)
-            (case type
-              ((terminate) (thread-terminate! t))
-              (else (thread-join! t))))
-          (<thread-pool>-threads tp))))
+        (dovector
+          (<thread-pool>-queues tp)
+          ->
+          v
+          (i e)
+          (shared-queue-put! e #f)
+          (vector-set! v i #f))
+        (dovector
+          (<thread-pool>-threads tp)
+          ->
+          v
+          (i e)
+          (case type
+            ((terminate) (thread-terminate! e))
+            (else (thread-join! e)))
+          (vector-set! v i #f))))
     (define (thread-pool-thread-terminate! tp id)
       (define threads (<thread-pool>-threads tp))
       (define queues (<thread-pool>-queues tp))

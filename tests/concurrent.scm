@@ -204,10 +204,8 @@
   )
 
 (let ((pool (make-thread-pool 1 raise)))
-  (test-error "thread-pool error-handler"
-	      error?
-	      (thread-pool-release!
-	       (thread-pool-push-task! pool (lambda () (error 'dummy "msg"))))))
+  (thread-pool-push-task! pool (lambda () (error 'dummy "msg")))
+  (test-assert "wait after error" (thread-pool-wait-all! pool)))
 
 ;; simple future
 (let ((f1 (future (thread-sleep! .1) 'ok))
@@ -260,6 +258,7 @@
   (test-assert "shutdown execute(1)" (executor? (execute-future! e f1)))
   (test-assert "shutdown execute(2)" (executor? (execute-future! e f2)))
   (test-assert "shutdown exeucte(3)" (executor? (execute-future! e f3)))
+  (test-equal "future timeout" 'timeout (future-get f1 0 'timeout))
   (test-equal "shutdown pool size (4)" 3 (executor-pool-size e))
   (test-assert "shutdown shutodown" (shutdown-executor! e))
   (test-equal "shutdown pool size (5)" 0 (executor-pool-size e))

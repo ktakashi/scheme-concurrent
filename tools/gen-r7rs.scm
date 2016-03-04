@@ -55,6 +55,7 @@
 		     (('define 'shared-box-mark . rest) #t)
 		     (('define ('shared-box-put! . args) . rest) #t)
 		     (('define ('shared-box-get! . args) . rest) #t)
+		     (('define ('raise-future-terminated . args) . rest) #t)
 		     (_ #f)))) body))
 
 ;; this file must be manually modified...
