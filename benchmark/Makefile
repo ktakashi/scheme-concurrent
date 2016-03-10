@@ -1,16 +1,17 @@
 # executor doesn't work on chibi properly...
 FILES= only-thread.scm managed-thread.scm thread-pool.scm # executor.scm
+R6RS_FILES= $(FILES:.scm=.sps)
 R7RS_FILES= $(FILES:.scm=.scm7)
 
 
 all: sagittarius guile gauche chibi
 
-sagittarius:
-	@for f in $(FILES); do echo $$f; sash -L ../src $$f; done
+sagittarius: $(R6RS_FILES)
+	@for f in $(R6RS_FILES); do echo $$f; sash -L ../src $$f; done
 	@echo done
 
-guile:
-	@for f in $(FILES); do \
+guile: $(R6RS_FILES)
+	@for f in $(R6RS_FILES); do \
 	  echo $$f; \
 	  guile -q -L ../src -L ../lib/guile -x .sls $$f; \
 	done
@@ -31,5 +32,8 @@ chibi:  $(R7RS_FILES)
 	done
 	@echo done
 
-%.scm7: %.scm
+%.sps: %.scm
+	sash convert-r6rs.scm $< $@
+
+%.scm7: %.sps
 	sash convert-r7rs.scm $< $@
