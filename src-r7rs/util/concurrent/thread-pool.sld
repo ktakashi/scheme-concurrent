@@ -137,4 +137,6 @@
                 nq
                 (<thread-pool>-error-handler tp)))))))
     (define (thread-pool-thread-task-running? tp id)
-      (not (shared-queue-find (<thread-pool>-idlings tp) id)))))
+      (not (shared-queue-find
+             (<thread-pool>-idlings tp)
+             (lambda (o) (= o id)))))))
