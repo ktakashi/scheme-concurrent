@@ -184,7 +184,7 @@
 
   ;; priority queue
   ;; we do simply B-tree
-    (define-record-type 
+  (define-record-type 
     (<shared-priority-queue> make-shared-priority-queue shared-priority-queue?)
     (fields (mutable elements %spq-es %spq-es-set!)
 	    (mutable size shared-priority-queue-size %spq-size-set!)
