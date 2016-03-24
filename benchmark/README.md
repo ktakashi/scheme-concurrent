@@ -41,13 +41,13 @@ thread-pool.scm
 executor.scm
 
 ;;  (run count n*)
-;;  0.321831 real    0.651005 user    0.004029 sys
+;;  0.340716 real    0.671081 user    0.008245 sys
 
 ;;  (run count n*)
-;;  2.188450 real    6.584105 user    0.003298 sys
+;;  2.250261 real    6.482322 user    0.008140 sys
 
 ;;  (run count n*)
-;;  21.440668 real    65.512636 user    0.123994 sys
+;;  21.742948 real    64.898616 user    0.189903 sys
 done
 ```
 
@@ -80,11 +80,11 @@ clock utime stime cutime cstime gctime
 
 executor.scm
 clock utime stime cutime cstime gctime
- 0.25  0.75  0.01   0.00   0.00   0.04
+ 0.26  0.77  0.01   0.00   0.00   0.01
 clock utime stime cutime cstime gctime
- 2.44  7.38  0.02   0.00   0.00   0.23
+ 2.58  7.66  0.05   0.00   0.00   0.00
 clock utime stime cutime cstime gctime
-24.58 74.28  0.53   0.00   0.00   3.11
+26.30 75.59  0.70   0.00   0.00   0.00
 done
 ```
 
@@ -135,17 +135,17 @@ thread-pool.scm7
 
 executor.scm7
 ;(time (run count n*))
-; real   0.219
-; user   0.660
+; real   0.238
+; user   0.670
 ; sys    0.000
 ;(time (run count n*))
-; real   2.217
-; user   6.580
-; sys    0.010
+; real   2.399
+; user   6.590
+; sys    0.040
 ;(time (run count n*))
-; real  21.584
-; user  65.600
-; sys    0.120
+; real  22.561
+; user  65.860
+; sys    0.620
 done
 ```
 
