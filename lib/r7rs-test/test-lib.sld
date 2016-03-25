@@ -109,8 +109,9 @@
 		  (display "PASS: ") (write name) (newline))))))
       (define-syntax test-error
 	(syntax-rules ()
-	  ((_ expr) (test-assert 'expr expr))
-	  ((_ name expr)
+	  ((_ expr) (test-error 'expr (lambda (e) #t) expr))
+	  ((_ pred expr) (test-error 'expr (lambda (e) #t) expr))
+	  ((_ name pred? expr)
 	   (guard (e (else 
 		      (inc-passed!)
 		      (display "PASS: ") (write name) (newline)))
