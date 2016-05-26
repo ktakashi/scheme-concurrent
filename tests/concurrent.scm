@@ -108,6 +108,31 @@
   (test-equal "results" '(w r) results)
   )
 
+;; lock / unlock
+(let ((sq (make-shared-queue 0)))
+  (test-assert (shared-queue-lock! sq))
+  (test-assert (shared-queue-locked? sq))
+  (test-assert (shared-queue-unlock! sq)))
+
+;; remove!
+(define (test-remove! lis o)
+  (define len (length lis))
+  (let ((sq (make-shared-queue)))
+    (for-each (lambda (o) (shared-queue-put! sq o)) lis)
+    (test-assert `(shared-queue-remove! sq ,o) (shared-queue-remove! sq o))
+    (test-assert `(not (shared-queue-remove! sq ,o))
+		 (not (shared-queue-remove! sq o)))
+    (test-equal `(,lis ,o) (- len 1) (shared-queue-size sq))
+    (test-equal `(,lis ,o)
+		(remove o lis)
+		(let loop ((r '()))
+		  (if (shared-queue-empty? sq)
+		      (reverse r)
+		      (loop (cons (shared-queue-get! sq) r)))))))
+(test-remove! '(1 2 3 4 5) 3)
+(test-remove! '(1 2 3 4 5) 1)
+(test-remove! '(1 2 3 4 5) 5)
+
 ;; shared-priority-queue
 (let ((compare (lambda (a b) (cond ((= a b) 0) ((< a b) -1) (else 1)))))
   (define spq (make-shared-priority-queue compare))

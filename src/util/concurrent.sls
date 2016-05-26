@@ -35,9 +35,12 @@
 	    shared-queue-max-length
 	    shared-queue-overflows?
 	    shared-queue-put! shared-queue-get!
+	    shared-queue-remove!
 	    shared-queue-clear!
 	    shared-queue-find
 	    shared-queue-locked?
+	    shared-queue-lock!
+	    shared-queue-unlock!
 
 	    shared-priority-queue? make-shared-priority-queue
 	    <shared-priority-queue>
@@ -48,6 +51,8 @@
 	    shared-priority-queue-remove!
 	    shared-priority-queue-clear!
 	    shared-priority-queue-locked?
+	    shared-priority-queue-lock!
+	    shared-priority-queue-unlock!
 
 	    ;; thread-pool
 	    make-thread-pool thread-pool? <thread-pool>

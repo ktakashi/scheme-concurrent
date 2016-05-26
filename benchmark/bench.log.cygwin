@@ -29,6 +29,17 @@ thread-pool.scm
 
 ;;  (run count n*)
 ;;  21.346221 real    81.44800 user    0.047000 sys
+executor.sps
+
+;;  (run count n*)
+;;  0.345020 real    0.687000 user    0.015000 sys
+
+;;  (run count n*)
+;;  2.532145 real    7.394000 user    0.000000 sys
+
+;;  (run count n*)
+;;  25.022431 real    75.94100 user    0.188000 sys
+
 done
 only-thread.scm
 GC Warning: Out of Memory! Heap size: 382 MiB. Returning NULL!
@@ -63,6 +74,14 @@ clock utime stime cutime cstime gctime
  3.12 11.87  0.02   0.00   0.00   0.08
 clock utime stime cutime cstime gctime
 31.24 118.09  0.34   0.00   0.00   0.86
+executor.sps
+clock utime stime cutime cstime gctime
+ 0.37  1.01  0.00   0.00   0.00   0.00
+clock utime stime cutime cstime gctime
+ 3.80 11.64  0.05   0.00   0.00   0.28
+Too many heap sections
+/bin/sh: line 1:   888 Aborted                 guile -q -L ../src -L ../lib/guile -x .sls $f
+
 done
 sash convert-r7rs.scm managed-thread.scm managed-thread.scm7
 sash convert-r7rs.scm thread-pool.scm thread-pool.scm7
@@ -105,6 +124,19 @@ thread-pool.scm7
 ; real  20.269
 ; user  78.187
 ; sys    0.016
+executor.scm7
+;(time (run count n*))
+; real   0.325
+; user   0.795
+; sys    0.000
+;(time (run count n*))
+; real   2.478
+; user   7.192
+; sys    0.015
+;(time (run count n*))
+; real  24.046
+; user  73.663
+; sys    0.172
 done
 only-thread.scm7
 (run count n*): 695 ms

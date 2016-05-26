@@ -122,10 +122,14 @@
       (let ((t (vector-ref threads id))
             (q (vector-ref queues id))
             (nq (make-shared-queue)))
-        (shared-queue-clear! q)
-        (shared-queue-locked? idlings #t)
-        (thread-terminate! t)
         (vector-set! queues id nq)
+        (shared-queue-clear! q)
+        (shared-queue-lock! idlings)
+        (shared-queue-lock! q)
+        (thread-terminate! t)
+        (shared-queue-unlock! q)
+        (shared-queue-unlock! idlings)
+        (shared-queue-remove! idlings id)
         (vector-set!
           threads
           id

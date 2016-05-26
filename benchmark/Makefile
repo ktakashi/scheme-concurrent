@@ -1,5 +1,6 @@
 # executor doesn't work on chibi properly...
-FILES= only-thread.scm managed-thread.scm thread-pool.scm # executor.scm
+#FILES= only-thread.scm managed-thread.scm thread-pool.scm # executor.scm
+FILES= executor.scm
 R6RS_FILES= $(FILES:.scm=.sps)
 R7RS_FILES= $(FILES:.scm=.scm7)
 
