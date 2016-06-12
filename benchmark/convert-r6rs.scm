@@ -28,7 +28,7 @@
 
 (define *prologue*
   '(
-    (for-each (lambda (count n*) (time (run count n*))) counts n**))
+    (for-each (lambda (n*) (time (run n*))) n**))
   )
 
 (define (dump out exprs)

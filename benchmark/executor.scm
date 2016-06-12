@@ -1,4 +1,4 @@
-(define (run count n*)
+(define (run n*)
   (let ((e (make-thread-pool-executor 10)))
     (let loop ((n* n*) (f* '()))
       (cond ((null? n*) (for-each future-get f*) (shutdown-executor! e))

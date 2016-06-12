@@ -1,4 +1,4 @@
-(define (run count n*)
+(define (run n*)
   (let ((tp (make-thread-pool 10))
 	(sq (make-shared-queue)))
     (let loop ((n* n*))
